@@ -150,15 +150,16 @@ const regexPatterns = {
 }
 
 // for many articles of clothing
-const regexes = [OneSize, cmInch, numUS, cmInchType2, ITUSre, USre, numUSType2, WnumLnum, cmUS, USnum, ITre, Wnum, WnumITnum, num];
+const regexMasterList = [OneSize, cmInch, numUS, cmInchType2, ITUSre, USre, numUSType2, WnumLnum, cmUS, USnum, ITre, Wnum, WnumITnum, num];
 
 // let test = regexes.forEach(regex => regex.test(str) ? regexes.indexOf(regex) : null);
 // console.log(test);
 
 //
-const sizes = ["W25 | L34", "10 | XL", "100 cm / 40 Inches", "36", "42 | S", "56 cm|XS", "EU34.5/US4.5", "IT36 | S", "IT36", "L", "One Size", "W 24", "W25 | IT39", "it36-xs-de"];
+const sizes = [{gender: "menswear", category: "pants", size: "W25 | L34"}, "10 | XL", "100 cm / 40 Inches", "36", "42 | S", "56 cm|XS", "EU34.5/US4.5", "IT36 | S", "IT36", "L", "One Size", "W 24", "W25 | IT39", "it36-xs-de"];
 //test string
 const str = "W25 | L34";
+const product = {gender: "menswear", category: "pants", size: "W25 | L34"};
 
 // for (let i = 0; i < regexes.length; i++) {
 //     for (let j = 0; j < sizes.length; j++) {
@@ -172,22 +173,28 @@ const str = "W25 | L34";
 // console.log(str.match(W_pantsre));
 
 const matches = [];
-regexes.forEach(regex => regex.test(str) ? matches.push(str.match(regex)) : null);
+// regexes.forEach(regex => regex.test(str) ? matches.push(str.match(regex)) : null);
 
-console.log(matches);
+// console.log(matches);
+
+let regexes;
+function findRegexes(product) {
+    if (product.gender === "menswear") {
+        switch (product.category){
+            case "pants":
+                regexes = regexPatterns.menswear.pants
+        }
+    }
+    
+}
+
+findRegexes(product);
+regexes.forEach(regex => regex.test(product.size) ? matches.push(product.size.match(regex)) : null);
+console.log(matches)
 
 const matchingREs = regexes.filter(regex => regex.test(str));
 console.log(matchingREs);
 
-//below just returns back all the regexes
-// const cleanMatches = [];
-// regexes.forEach(match => match ? cleanMatches.push(match): null);
-// console.log(cleanMatches);
-
-//can includes take a second argument? yes but it is starting index, not a second thing to look for.
-// if (product.categories.includes("menswear")) {
-
-// }
 //menswear only
 
 let cleanStr = "";
