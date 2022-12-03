@@ -314,16 +314,16 @@ function findMatches() {
     regex.test(product.size) ? matches.push(product.size.match(regex)) : null
   );
 
-  const regexPattern = regexes.filter(regex => regex.test(product.size))
+  const regexPattern = regexes.filter(regex => regex.test(product.size));
 
-  const formattedSize = [];
+  const formattedSizes = [];
   for (let i = 0; i < REgroups; i++) {
     if (REgroups[i].includes(regexPattern)) {
-        formattedSize.push(matches[0][i+1]);
+        formattedSizes.push(matches[0][i+1]);
     }
   }
-
-  return formattedSize;
+  // why is formattedSizes still an empty array?
+  return formattedSizes;
 }
 }
 
